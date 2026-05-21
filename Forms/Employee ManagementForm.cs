@@ -21,6 +21,7 @@ namespace Shift_Sync
             LoadDataIntoGrid();
         }
         // Added Employee management form
+        // employee dashboard
         private void LoadDataIntoGrid()
         {
             dataGridView1.DataSource = _userRepository.GetAllEmployees();
