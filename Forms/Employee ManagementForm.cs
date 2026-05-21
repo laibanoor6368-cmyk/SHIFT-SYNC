@@ -20,7 +20,7 @@ namespace Shift_Sync
         {
             LoadDataIntoGrid();
         }
-
+        // Added Employee management form
         private void LoadDataIntoGrid()
         {
             dataGridView1.DataSource = _userRepository.GetAllEmployees();
