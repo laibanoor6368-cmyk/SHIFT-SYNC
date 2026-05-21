@@ -13,6 +13,7 @@ namespace Shift_Sync
         {
             InitializeComponent();
         }
+        //Testing git commit for class
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
