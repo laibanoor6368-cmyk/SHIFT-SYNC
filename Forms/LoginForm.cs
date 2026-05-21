@@ -16,7 +16,11 @@ namespace Shift_Sync
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text.Trim();
+            txtPassword.PasswordChar = '*';
+            txtPassword.UseSystemPasswordChar = false;
+        
+
+        string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) ||
@@ -46,6 +50,7 @@ namespace Shift_Sync
                 if (role != null)
                 {
                     MessageBox.Show("Login Successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Dashboard loading");
 
                     if (role.Equals("Manager", StringComparison.OrdinalIgnoreCase))
                     {
@@ -57,7 +62,7 @@ namespace Shift_Sync
                     {
                         EmployeeDashboardForm empDash = new EmployeeDashboardForm(username);
                         empDash.Show();
-                        this.Close();
+                        this.Hide();
                     }
                 }
                 else
@@ -73,6 +78,11 @@ namespace Shift_Sync
 
 
         private void LoginForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

@@ -147,8 +147,9 @@
             this.btnSubmit.Size = new System.Drawing.Size(156, 48);
             this.btnSubmit.TabIndex = 7;
             this.btnSubmit.Text = "Submit";
+            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             this.btnSubmit.UseVisualStyleBackColor = false;
-            this.btnSubmit.Click += new System.EventHandler(this.btnSwapRequest_Click);
+            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click_1);
             // 
             // btnClean
             // 
@@ -161,8 +162,8 @@
             this.btnClean.Size = new System.Drawing.Size(156, 48);
             this.btnClean.TabIndex = 8;
             this.btnClean.Text = "Clean";
+            this.btnClean.Click += new System.EventHandler(this.btnClean_Click);
             this.btnClean.UseVisualStyleBackColor = false;
-            this.btnClean.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // dataGridView1
             // 
@@ -183,6 +184,7 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(943, 239);
             this.dataGridView1.TabIndex = 9;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // SwapForm
             // 

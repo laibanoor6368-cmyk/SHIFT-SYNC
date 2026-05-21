@@ -1,27 +1,45 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
-using Shift_Sync.DataAccess; // DAL Layer attach ki
+using Shift_Sync.DataAccess;
 
 namespace Shift_Sync
 {
     public partial class SwapForm : Form
     {
         private ShiftRepository _shiftRepository = new ShiftRepository();
+        private UserRepository _userRepository = new UserRepository();
         private int selectedShiftId = 0;
 
         public SwapForm()
         {
             InitializeComponent();
-            dataGridView1.CellClick += dataGridViewShifts_CellClick;
-            btnSubmit.Click += btnSwapRequest_Click;
-            btnClean.Click += btnCancel_Click;
-            btnClean.Click += btnCancel_Click;
         }
-        
+
         private void SwapForm_Load(object sender, EventArgs e)
         {
             LoadShiftsData();
+            LoadEmployeesInComboBox();
+        }
+
+        private void LoadEmployeesInComboBox()
+        {
+            try
+            {
+                cmbEmployee.Items.Clear();
+                DataTable employees = _userRepository.GetAllEmployees();
+                foreach (DataRow row in employees.Rows)
+                {
+                    if (row["Role"].ToString() == "Employee")
+                    {
+                        cmbEmployee.Items.Add(row["Username"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
         }
 
         private void LoadShiftsData()
@@ -33,50 +51,71 @@ namespace Shift_Sync
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnSwapRequest_Click(object sender, EventArgs e)
+        // ✅ Grid row click — ShiftID pakdo
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    var row = dataGridView1.Rows[e.RowIndex];
+                    if (row.Cells["ShiftID"].Value != null)
+                    {
+                        selectedShiftId = Convert.ToInt32(row.Cells["ShiftID"].Value);
+                        MessageBox.Show("Shift " + selectedShiftId + " selected!", "Selected");
+                    }
+                }
+            }
+            catch
+            {
+                selectedShiftId = 0;
+            }
+        }
+
+        // ✅ Submit button
+        private void btnSubmit_Click(object sender, EventArgs e)
         {
             if (selectedShiftId == 0)
             {
-                MessageBox.Show("Please select a shift to swap from the grid!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Pehle grid mein shift select karo!",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (cmbEmployee.SelectedItem == null)
             {
-                MessageBox.Show("Please select the new employee for this shift!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Naya employee select karo!",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             string newEmp = cmbEmployee.SelectedItem.ToString();
 
-            if (_shiftRepository.RequestShiftSwap(selectedShiftId, newEmp))
+            bool success = _shiftRepository.UpdateShiftStatus(selectedShiftId, newEmp);
+
+            if (success)
             {
-                MessageBox.Show("Shift Swapped Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadShiftsData(); // Refresh grid view
+                MessageBox.Show("Swap Request Submitted!", "Success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                selectedShiftId = 0;
+                LoadShiftsData();
             }
         }
 
-        private void dataGridViewShifts_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-                selectedShiftId = Convert.ToInt32(row.Cells["ShiftID"].Value);
-            }
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
+        // ✅ Clean button
+        private void btnClean_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        
-        
+        private void btnSubmit_Click_1(object sender, EventArgs e)
+        {
 
-   
+        }
     }
 }

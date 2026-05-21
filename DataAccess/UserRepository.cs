@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
-using System.Windows.Forms;
 
 namespace Shift_Sync.DataAccess
 {
     public class UserRepository
     {
-        private string connString = "Data Source=D:\\ShiftSyncDB.db;Version=3;";
+        // DatabaseHelper se path aa raha hai
+        private string connString = DatabaseHelper.ConnectionString;
 
         public bool AddEmployee(string username, string skills, string hours)
         {
@@ -24,7 +24,22 @@ namespace Shift_Sync.DataAccess
                 }
             }
         }
-
+        public bool UpdateEmployee(int userId, string username, string skills, string hours)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connString))
+            {
+                string query = "UPDATE users SET Username = @user, Skills = @skills, Hours = @hours WHERE UserID = @id";
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@user", username);
+                    cmd.Parameters.AddWithValue("@skills", skills);
+                    cmd.Parameters.AddWithValue("@hours", hours);
+                    cmd.Parameters.AddWithValue("@id", userId);
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
         public bool DeleteEmployee(int userId)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connString))
@@ -38,11 +53,12 @@ namespace Shift_Sync.DataAccess
                 }
             }
         }
+
         public int GetTotalEmployeesCount()
         {
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=D:\\ShiftSyncDB.db;Version=3;"))
+            try
             {
-                try
+                using (SQLiteConnection conn = new SQLiteConnection(connString))
                 {
                     conn.Open();
                     string query = "SELECT COUNT(*) FROM users WHERE Role = 'Employee'";
@@ -52,13 +68,9 @@ namespace Shift_Sync.DataAccess
                         return result != null ? Convert.ToInt32(result) : 0;
                     }
                 }
-                catch (Exception)
-                {
-                    return 0; // Agar error aaye to 0 return karega
-                }
             }
+            catch { return 0; }
         }
-
 
         public string ValidateUser(string username, string password)
         {
@@ -75,11 +87,11 @@ namespace Shift_Sync.DataAccess
                 }
             }
         }
-    
-    public DataTable GetAllEmployees()
+
+        public DataTable GetAllEmployees()
         {
             DataTable dt = new DataTable();
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=D:\\ShiftSyncDB.db;Version=3;"))
+            using (SQLiteConnection conn = new SQLiteConnection(connString))
             {
                 conn.Open();
                 string query = "SELECT * FROM users";

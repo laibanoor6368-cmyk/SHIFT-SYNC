@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelTop = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.lblWelcome = new System.Windows.Forms.Label();
@@ -38,10 +38,6 @@
             this.btnSwapRequest = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ColDay = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColShifts = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelTop.SuspendLayout();
             this.panelWelcome.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -89,7 +85,6 @@
             this.panelWelcome.Name = "panelWelcome";
             this.panelWelcome.Size = new System.Drawing.Size(1024, 100);
             this.panelWelcome.TabIndex = 2;
-      
             // 
             // lblEmpID
             // 
@@ -110,10 +105,11 @@
             this.btnViewShift.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnViewShift.Location = new System.Drawing.Point(108, 258);
             this.btnViewShift.Name = "btnViewShift";
-            this.btnViewShift.Size = new System.Drawing.Size(178, 52);
+            this.btnViewShift.Size = new System.Drawing.Size(194, 52);
             this.btnViewShift.TabIndex = 3;
             this.btnViewShift.Text = "My Schedule";
             this.btnViewShift.UseVisualStyleBackColor = false;
+            this.btnViewShift.Click += new System.EventHandler(this.btnMySchedule_Click);
             // 
             // btnSwapRequest
             // 
@@ -123,10 +119,11 @@
             this.btnSwapRequest.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnSwapRequest.Location = new System.Drawing.Point(323, 258);
             this.btnSwapRequest.Name = "btnSwapRequest";
-            this.btnSwapRequest.Size = new System.Drawing.Size(178, 52);
+            this.btnSwapRequest.Size = new System.Drawing.Size(204, 52);
             this.btnSwapRequest.TabIndex = 4;
             this.btnSwapRequest.Text = "Swap Request";
             this.btnSwapRequest.UseVisualStyleBackColor = false;
+            this.btnSwapRequest.Click += new System.EventHandler(this.btnSwapRequest_Click);
             // 
             // btnLogout
             // 
@@ -136,59 +133,31 @@
             this.btnLogout.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnLogout.Location = new System.Drawing.Point(533, 258);
             this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(181, 52);
+            this.btnLogout.Size = new System.Drawing.Size(197, 52);
             this.btnLogout.TabIndex = 5;
             this.btnLogout.Text = "Logout";
             this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColDay,
-            this.ColDate,
-            this.ColStatus,
-            this.ColShifts});
             this.dataGridView1.Location = new System.Drawing.Point(108, 369);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(766, 277);
             this.dataGridView1.TabIndex = 6;
-            // 
-            // ColDay
-            // 
-            this.ColDay.HeaderText = "Day";
-            this.ColDay.MinimumWidth = 6;
-            this.ColDay.Name = "ColDay";
-            // 
-            // ColDate
-            // 
-            this.ColDate.HeaderText = "Date";
-            this.ColDate.MinimumWidth = 6;
-            this.ColDate.Name = "ColDate";
-            // 
-            // ColStatus
-            // 
-            this.ColStatus.HeaderText = "Status";
-            this.ColStatus.MinimumWidth = 6;
-            this.ColStatus.Name = "ColStatus";
-            // 
-            // ColShifts
-            // 
-            this.ColShifts.HeaderText = "Shifts";
-            this.ColShifts.MinimumWidth = 6;
-            this.ColShifts.Name = "ColShifts";
             // 
             // EmployeeDashboardForm
             // 
@@ -226,9 +195,5 @@
         private System.Windows.Forms.Button btnSwapRequest;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColDay;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColShifts;
     }
 }
